@@ -1,101 +1,145 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { Button } from "@/components/ui/button";
+import { CategoryBadge } from "@/components/ui/badge";
+import { FindingCard } from "@/components/analyze/finding-card";
+import { Zap, ArrowRight } from "lucide-react";
+import { EXAMPLE_SPEC, EXAMPLE_FINDINGS, EXAMPLE_CLARITY_SCORE } from "@/lib/analysis/example";
 
-export default function Home() {
+const HOW_IT_WORKS = [
+  {
+    step: "1",
+    title: "Paste your spec",
+    body: "Paste or upload any PRD, user story, or requirements document.",
+  },
+  {
+    step: "2",
+    title: "SpecLens scans for issues",
+    body: "AI finds ambiguities, contradictions, and gaps in seconds.",
+  },
+  {
+    step: "3",
+    title: "Fix before code is written",
+    body: "Each finding comes with a clarifying question to resolve it.",
+  },
+];
+
+export default function LandingPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen flex flex-col bg-bg-base">
+      <Header />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+      {/* HERO */}
+      <section className="flex flex-col items-center text-center px-6 pt-24 pb-24">
+        <div className="inline-flex items-center gap-2 mb-6">
+          <CategoryBadge category="underspecified" />
+          <span className="text-label-lg text-text-secondary">AI-powered ambiguity detection</span>
+        </div>
+
+        <h1 className="text-display-xl font-extrabold text-text-primary max-w-3xl text-balance leading-tight">
+          Catch every ambiguity<br />before code is written.
+        </h1>
+
+        <p className="mt-5 text-body-lg text-text-secondary max-w-xl text-balance">
+          Paste your PRD or user story. SpecLens finds the gaps, contradictions, and missing edge cases — before they cost you a sprint.
+        </p>
+
+        <div className="mt-8 flex items-center gap-3 flex-wrap justify-center">
+          <Link href="/analyze">
+            <Button size="lg">
+              <Zap className="w-4 h-4" />
+              Analyze your spec
+            </Button>
+          </Link>
+          <a href="#demo">
+            <Button variant="ghost" size="lg">
+              View demo <ArrowRight className="w-4 h-4" />
+            </Button>
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <p className="mt-4 text-label-md text-text-muted">
+          Free to start · No account needed · 100% open source
+        </p>
+      </section>
+
+      {/* DEMO */}
+      <section id="demo" className="bg-bg-surface border-y border-border-default py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12 text-center">
+            <h2 className="text-heading-xl text-text-primary">See it in action</h2>
+            <p className="mt-2 text-body-md text-text-secondary">A real spec analyzed. No setup required.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8">
+            {/* Spec */}
+            <div>
+              <p className="text-label-lg text-text-muted mb-3 uppercase tracking-wide">Sample spec</p>
+              <div className="bg-bg-elevated border border-border-default rounded-lg p-5">
+                <pre className="font-mono text-code-md text-text-secondary whitespace-pre-wrap leading-relaxed">
+                  {EXAMPLE_SPEC}
+                </pre>
+              </div>
+            </div>
+
+            {/* Findings */}
+            <div>
+              <p className="text-label-lg text-text-muted mb-3 uppercase tracking-wide">
+                {EXAMPLE_FINDINGS.length} issues found · Clarity score:{" "}
+                <span className="text-warning">{EXAMPLE_CLARITY_SCORE}</span>
+              </p>
+              <div className="space-y-4">
+                {EXAMPLE_FINDINGS.map((f) => (
+                  <FindingCard key={f.id} finding={f} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link href="/analyze">
+              <Button size="lg">
+                Analyze your own spec <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-heading-xl text-text-primary text-center mb-12">How it works</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            {HOW_IT_WORKS.map(({ step, title, body }) => (
+              <div key={step} className="flex flex-col items-center text-center">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4 bg-accent-default/15 border border-accent-default/30 text-accent-default font-bold text-heading-md">
+                  {step}
+                </div>
+                <h3 className="text-heading-md text-text-primary mb-2">{title}</h3>
+                <p className="text-body-md text-text-secondary">{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BOTTOM CTA */}
+      <section className="border-t border-border-default py-20 px-6 text-center">
+        <h2 className="text-heading-xl text-text-primary mb-4">Ready to sharpen your spec?</h2>
+        <p className="text-body-lg text-text-secondary mb-8 max-w-md mx-auto">
+          Free for everyone. No account, no credit card.
+        </p>
+        <Link href="/analyze">
+          <Button size="lg">
+            <Zap className="w-4 h-4" />
+            Start analyzing
+          </Button>
+        </Link>
+      </section>
+
+      <Footer />
     </div>
   );
 }
