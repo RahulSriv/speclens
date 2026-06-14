@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { GitFork } from "lucide-react";
 
 export function Footer() {
