@@ -21,7 +21,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <ProviderStatus onClick={() => setPickerOpen(true)} />
           <a
-            href="https://github.com"
+            href="https://github.com/RahulSriv/speclens"
             target="_blank"
             rel="noopener noreferrer"
             className="text-text-muted hover:text-text-secondary transition-colors"

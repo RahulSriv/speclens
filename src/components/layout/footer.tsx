@@ -10,7 +10,7 @@ export function Footer() {
         Built to make specs sharper
       </p>
       <a
-        href="https://github.com"
+        href="https://github.com/RahulSriv/speclens"
         target="_blank"
         rel="noopener noreferrer"
         className="ml-auto flex items-center gap-1.5 text-label-md text-text-muted hover:text-text-secondary transition-colors"
