@@ -2,7 +2,7 @@
 
 **AI-powered spec ambiguity detector.** Paste a PRD, user story, or requirements doc — SpecLens finds the gaps, contradictions, and missing edge cases before they cost you a sprint.
 
-🔗 **[speclens.vercel.app](https://speclens-rouge.vercel.app)** · [GitHub](https://github.com/RahulSriv/speclens)
+🔗 **[speclens-rouge.vercel.app](https://speclens-rouge.vercel.app)** · [GitHub](https://github.com/RahulSriv/speclens)
 
 ---
 
