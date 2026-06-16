@@ -4,20 +4,9 @@ import { useCallback } from "react";
 import { useAnalysisStore } from "@/store/analysis-store";
 import { useProviderStore } from "@/store/provider-store";
 import { AmbiguityFindingSchema, type AmbiguityFinding } from "@/lib/analysis/schema";
+import { computeClarityScore } from "@/lib/analysis/score";
 
 const TIMEOUT_MS = 30_000;
-
-const SEVERITY_PENALTY: Record<AmbiguityFinding["severity"], number> = {
-  critical: 22,
-  high: 12,
-  medium: 5,
-  low: 2,
-};
-
-function computeClarityScore(findings: AmbiguityFinding[]): number {
-  const penalty = findings.reduce((sum, f) => sum + SEVERITY_PENALTY[f.severity], 0);
-  return Math.max(0, Math.min(100, 100 - penalty));
-}
 
 export function useAnalysis() {
   const { setStreaming, addFinding, setComplete, setError } = useAnalysisStore();
@@ -87,12 +76,8 @@ export function useAnalysis() {
 
       if (buffer.trim()) processLine(buffer);
 
-      if (collectedFindings.length > 0) {
-        const score = computeClarityScore(collectedFindings);
-        setComplete(score, collectedFindings.length);
-      } else {
-        setError("No findings returned. Check your API key or try a longer spec.");
-      }
+      const score = computeClarityScore(collectedFindings);
+      setComplete(score, collectedFindings.length);
 
     } catch (err) {
       clearTimeout(timeout);

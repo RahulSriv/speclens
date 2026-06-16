@@ -1,4 +1,4 @@
-import { GitFork } from "lucide-react";
+import { Star } from "lucide-react";
 
 export function Footer() {
   return (
@@ -23,7 +23,7 @@ export function Footer() {
         rel="noopener noreferrer"
         className="ml-auto flex items-center gap-1.5 text-label-md text-text-muted hover:text-text-secondary transition-colors"
       >
-        <GitFork className="w-4 h-4" />
+        <Star className="w-4 h-4" />
         Star on GitHub
       </a>
     </footer>

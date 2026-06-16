@@ -52,7 +52,6 @@ export function SpecInput({ value, onChange, disabled }: SpecInputProps) {
             "transition-colors duration-150",
             isOverLimit ? "border-error" : "border-border-default"
           )}
-          maxLength={MAX_CHARS + 1}
         />
         <span
           className={cn(

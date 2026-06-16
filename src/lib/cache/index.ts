@@ -12,7 +12,7 @@ const MAX_ENTRIES = 500;
 const store = new Map<string, CacheEntry>();
 
 export function specHash(spec: string, provider: string): string {
-  return createHash("sha256").update(`${provider}:${spec.trim()}`).digest("hex").slice(0, 16);
+  return createHash("sha256").update(`${provider}:${spec.trim()}`).digest("hex");
 }
 
 export function getCached(hash: string): AmbiguityFinding[] | null {
@@ -22,11 +22,10 @@ export function getCached(hash: string): AmbiguityFinding[] | null {
   return entry.findings;
 }
 
-export function setCached(hash: string, findings: AmbiguityFinding[]): void {
+export function setCached(hash: string, findings: AmbiguityFinding[], ttlMs = TTL_MS): void {
   if (store.size >= MAX_ENTRIES) {
-    // evict oldest entry
     const firstKey = store.keys().next().value;
     if (firstKey) store.delete(firstKey);
   }
-  store.set(hash, { findings, expiresAt: Date.now() + TTL_MS });
+  store.set(hash, { findings, expiresAt: ttlMs === Infinity ? Infinity : Date.now() + ttlMs });
 }

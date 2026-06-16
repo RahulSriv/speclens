@@ -8,7 +8,7 @@
 
 ## What it does
 
-SpecLens runs your spec through a systematic 18-point ambiguity checklist across six categories:
+SpecLens runs your spec through a systematic 24-point ambiguity checklist across six categories:
 
 | Category | What it catches |
 |---|---|
@@ -101,7 +101,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `GEMINI_API_KEY` | No | Fallback Gemini key (optional) |
 | `FREE_ANALYSES_PER_DAY` | No | Daily limit per IP (default: 3) |
 
-API keys are **never** stored server-side. User-provided BYOK keys live in browser localStorage only and are sent directly to the AI provider's API.
+API keys are **never** stored server-side. User-provided BYOK keys live in browser localStorage only. They are sent to the `/api/analyze` route over HTTPS and used to call the AI provider — they are never logged, cached, or written to any store.
 
 ---
 

@@ -148,7 +148,7 @@ Analysis results are cached in-memory keyed by `SHA-256(spec + provider)`. The l
 
 - Connected GitHub repo to Vercel (auto-deploy on merge to `main`)
 - Added `GROQ_API_KEY` environment variable in Vercel dashboard
-- Live at: [speclens.vercel.app](https://speclens-avxl-p904zpn32-rahul-sriv.vercel.app)
+- Live at: [speclens-rouge.vercel.app](https://speclens-rouge.vercel.app)
 
 ### 5c. Open Source Hygiene
 

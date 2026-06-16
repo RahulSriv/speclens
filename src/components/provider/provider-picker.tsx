@@ -32,7 +32,7 @@ const PROVIDERS: ProviderDef[] = [
 const PROVIDER_LOGOS: Record<Provider, string> = {
   shared: "✦",
   gemini: "G",
-  groq:   "G",
+  groq:   "Gr",
   claude: "A",
   openai: "O",
 };
@@ -54,7 +54,7 @@ export function ProviderPicker({ open, onClose }: ProviderPickerProps) {
   const isConnected = activeProvider === selected && (selected === "shared" || !!activeKey);
 
   function handleSave() {
-    setProvider(selected, needsKey ? keyInput : undefined);
+    setProvider(selected, needsKey ? keyInput.trim() : undefined);
     onClose();
   }
 
@@ -69,8 +69,13 @@ export function ProviderPicker({ open, onClose }: ProviderPickerProps) {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
-      <div className="fixed right-0 top-0 h-full w-[480px] max-w-full bg-bg-surface border-l border-border-default z-50 flex flex-col shadow-2xl">
+      <div
+        className="fixed inset-0 bg-black/50 z-40"
+        onClick={onClose}
+        onKeyDown={(e) => e.key === "Escape" && onClose()}
+        role="presentation"
+      />
+      <div role="dialog" aria-modal="true" aria-label="Connect your AI" className="fixed right-0 top-0 h-full w-[480px] max-w-full bg-bg-surface border-l border-border-default z-50 flex flex-col shadow-2xl">
         <div className="px-6 pt-6 pb-4 border-b border-border-default">
           <div className="flex items-start justify-between">
             <div>
@@ -79,7 +84,7 @@ export function ProviderPicker({ open, onClose }: ProviderPickerProps) {
                 Free options work great. BYOK for unlimited analyses.
               </p>
             </div>
-            <button onClick={onClose} className="text-text-muted hover:text-text-primary transition-colors p-1 -mr-1">
+            <button onClick={onClose} aria-label="Close" className="text-text-muted hover:text-text-primary transition-colors p-1 -mr-1">
               <X className="w-5 h-5" />
             </button>
           </div>

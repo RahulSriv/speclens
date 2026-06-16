@@ -41,7 +41,7 @@ SpecLens is a web-based AI tool that analyzes product specs, PRDs, and user stor
 | F2 | File upload | Accept `.md` and `.txt` files |
 | F3 | Streaming analysis | Findings stream in one by one as AI identifies them |
 | F4 | Structured findings | Each finding shows: category, severity, excerpt, issue description, clarifying question |
-| F5 | Shared Gemini key | First 3 analyses/day per IP run on server-side shared key — no setup required |
+| F5 | Shared Groq key | First 3 analyses/day per IP run on server-side shared key — no setup required |
 | F6 | Provider status in header | Always-visible indicator showing current provider and daily usage |
 | F7 | Provider picker | Settings panel to add own API key for Gemini, Groq, Claude, or OpenAI |
 | F8 | Static demo | Landing page with pre-loaded sample spec and hardcoded example output |

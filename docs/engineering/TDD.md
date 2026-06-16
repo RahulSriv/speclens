@@ -1,5 +1,7 @@
 # SpecLens — Technical Design Document (TDD)
 
+> **Note:** This is a pre-build design document written before implementation. It reflects the intended architecture, not the final code. The live implementation differs in some areas — notably the shared provider uses Groq (not Gemini), shadcn/ui was not used, and several planned files were consolidated or renamed. See the source code as the authoritative reference.
+
 **Version:** 1.0  
 **Date:** 2026-06-14  
 **Status:** Approved

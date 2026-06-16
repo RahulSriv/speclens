@@ -10,8 +10,8 @@ import { EXAMPLE_SPEC, EXAMPLE_FINDINGS } from "@/lib/analysis/example";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// Pre-seed cache with the example spec so landing page demo is always consistent
-setCached(specHash(EXAMPLE_SPEC, "shared"), EXAMPLE_FINDINGS);
+// Pre-seed with Infinity TTL so the landing demo never expires
+setCached(specHash(EXAMPLE_SPEC, "shared"), EXAMPLE_FINDINGS, Infinity);
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -30,6 +30,15 @@ export async function POST(req: NextRequest) {
 
   // Rate limit only shared-key requests
   if (provider === "shared") {
+    // Check cache first — cache hits don't consume the daily limit
+    const hash = specHash(spec, provider);
+    const cached = getCached(hash);
+    if (cached) {
+      const streamResponse = streamFromCache(cached);
+      streamResponse.headers.set("X-Cache", "HIT");
+      return streamResponse;
+    }
+
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
     const { allowed, remaining } = checkRateLimit(ip);
     if (!allowed) {
@@ -37,16 +46,6 @@ export async function POST(req: NextRequest) {
         { error: "Daily limit reached", code: "RATE_LIMITED" },
         { status: 429 }
       );
-    }
-
-    // Check cache for shared provider
-    const hash = specHash(spec, provider);
-    const cached = getCached(hash);
-    if (cached) {
-      const streamResponse = streamFromCache(cached);
-      streamResponse.headers.set("X-Remaining-Analyses", String(remaining));
-      streamResponse.headers.set("X-Cache", "HIT");
-      return streamResponse;
     }
 
     const streamResponse = await runStream(spec, provider, resolvedKey, hash);
