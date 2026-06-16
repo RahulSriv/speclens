@@ -40,7 +40,7 @@ export function ProviderStatus({ onClick }: ProviderStatusProps) {
       <span>{PROVIDER_LABELS[provider]}</span>
       {isShared && (
         <span className="text-label-md text-text-muted">
-          · {remaining} / 3 today
+          · {remaining} left today
         </span>
       )}
       <ChevronDown className="w-3.5 h-3.5 text-text-muted" />

@@ -22,19 +22,18 @@ function ClarityScore({ score }: { score: number }) {
   );
 }
 
-function copyFindings(findings: ReturnType<typeof useAnalysisStore.getState>["findings"]) {
-  const md = findings.map((f, i) => (
+function buildFindingsMarkdown(findings: ReturnType<typeof useAnalysisStore.getState>["findings"]) {
+  return findings.map((f, i) => (
     `### Finding ${i + 1}: ${f.category.replace(/_/g, " ")} (${f.severity})\n\n` +
     `> "${f.excerpt}"\n\n` +
     `**Issue:** ${f.issue}\n\n` +
     `**Question:** ${f.question}`
   )).join("\n\n---\n\n");
-  navigator.clipboard.writeText(md);
 }
 
 export default function AnalyzePage() {
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <AnalyzePageInner />
     </Suspense>
   );
@@ -64,10 +63,14 @@ function AnalyzePageInner() {
     analyze(spec);
   }
 
-  function handleCopy() {
-    copyFindings(findings);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(buildFindingsMarkdown(findings));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard unavailable (HTTP or restricted context) — fail silently
+    }
   }
 
   return (
@@ -84,6 +87,7 @@ function AnalyzePageInner() {
               <button
                 onClick={() => { reset(); setSpec(SAMPLE_SPEC); }}
                 className="text-accent-default hover:text-accent-hover transition-colors"
+                title="Intentionally ambiguous — designed to generate findings"
               >
                 Try sample spec →
               </button>
@@ -97,7 +101,7 @@ function AnalyzePageInner() {
               <span className="text-warning mt-0.5">⚠</span>
               <div>
                 <p className="text-body-md text-text-secondary">
-                  Daily limit reached. Try again tomorrow — or <span onClick={() => setPickerOpen(true)} className="text-accent-default hover:text-accent-hover transition-colors cursor-pointer">connect your own key</span>.
+                  Daily limit reached. Try again tomorrow — or <span role="button" tabIndex={0} onClick={() => setPickerOpen(true)} onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setPickerOpen(true)} className="text-accent-default hover:text-accent-hover transition-colors cursor-pointer">connect your own key</span>.
                 </p>
               </div>
             </div>
@@ -137,7 +141,7 @@ function AnalyzePageInner() {
                 </span>
                 {isComplete && clarityScore !== null && (
                   <span className="flex items-center gap-1.5 text-label-lg text-text-muted">
-                    Clarity: <ClarityScore score={clarityScore} />
+                    Clarity: <ClarityScore score={clarityScore} /><span className="text-label-md"> / 100</span>
                   </span>
                 )}
               </div>
@@ -175,11 +179,17 @@ function AnalyzePageInner() {
                 />
               ))}
               {isStreaming && <FindingCardSkeleton />}
+              {isError && (
+                <div className="flex flex-col items-center gap-3 pt-4 text-center">
+                  <p className="text-body-md text-error">{error}</p>
+                  <Button variant="secondary" onClick={reset}>Try again</Button>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Error state */}
-          {isError && (
+          {/* Error state (no partial findings) */}
+          {isError && !hasFindings && (
             <div className="flex flex-col items-center justify-center h-full min-h-[400px] gap-4 text-center">
               <p className="text-body-md text-error">{error}</p>
               <Button variant="secondary" onClick={reset}>Try again</Button>

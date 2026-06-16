@@ -1,0 +1,19 @@
+Notification Settings — Feature Specification
+
+Overview
+Users can control how and when they receive notifications from the platform. Admins can configure default notification settings for their organization.
+
+Notification Types
+The platform sends notifications for the following events: new messages, mentions, task assignments, due date reminders, and system updates. Users can enable or disable each type individually.
+
+Delivery Channels
+Notifications can be delivered via email, in-app, or push notification. Users choose their preferred channel per notification type. If a user has not set a preference, the system uses the default.
+
+Frequency Controls
+Users can set a quiet hours window during which non-urgent notifications are suppressed. Urgent notifications are always delivered immediately. Users can also choose to receive a daily digest instead of individual notifications.
+
+Admin Controls
+Admins can enable or disable specific notification types for all users in their organization. Admins can also set the default notification preferences for new users. Users can override admin defaults unless the admin has locked the setting.
+
+Unsubscribe
+Users can unsubscribe from all non-essential notifications with one click. Transactional notifications such as password resets and billing alerts cannot be disabled.

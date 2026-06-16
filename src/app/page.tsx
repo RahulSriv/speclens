@@ -87,7 +87,10 @@ export default function LandingPage() {
             <div>
               <p className="text-label-lg text-text-muted mb-3 uppercase tracking-wide">
                 {EXAMPLE_FINDINGS.length} issues found · Clarity score:{" "}
-                <span className="text-warning">{EXAMPLE_CLARITY_SCORE}</span>
+                <span className={EXAMPLE_CLARITY_SCORE >= 71 ? "text-success" : EXAMPLE_CLARITY_SCORE >= 41 ? "text-warning" : "text-error"}>
+                  {EXAMPLE_CLARITY_SCORE}
+                </span>
+                <span className="text-text-muted"> / 100</span>
               </p>
               <div className="space-y-4">
                 {EXAMPLE_FINDINGS.map((f) => (

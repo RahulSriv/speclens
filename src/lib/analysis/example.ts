@@ -1,4 +1,5 @@
 import type { AmbiguityFinding } from "@/lib/analysis/schema";
+import { computeClarityScore } from "@/lib/analysis/score";
 
 export const EXAMPLE_SPEC = `Expense Report System — Product Specification
 
@@ -73,8 +74,7 @@ export const EXAMPLE_FINDINGS: AmbiguityFinding[] = [
   },
 ];
 
-// Computed from severity weights: 1 critical(-22) + 3 high(-12×3) + 2 medium(-5×2) = -68 → 32
-export const EXAMPLE_CLARITY_SCORE = 32;
+export const EXAMPLE_CLARITY_SCORE = computeClarityScore(EXAMPLE_FINDINGS);
 
 // Shorter sample used on the /analyze page "Try sample spec" link (different from landing demo)
 export const SAMPLE_SPEC = `Team Invitation Feature
